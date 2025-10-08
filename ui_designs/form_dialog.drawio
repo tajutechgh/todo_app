@@ -1,0 +1,53 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.1.2 Chrome/138.0.7204.243 Electron/37.4.0 Safari/537.36" version="28.1.2">
+  <diagram name="Page-1" id="NuihXWpVMJclXbjpi29u">
+    <mxGraphModel dx="1298" dy="952" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="HlvREBfm2kLGhPkSsmS2-1" value="" style="shape=rect;fillColor=#ffffff;strokeColor=#eeeeee;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="170" width="370" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="HlvREBfm2kLGhPkSsmS2-10" value="" style="shape=line;strokeWidth=2;noLabel=1;strokeColor=#eeeeee;resizeWidth=1;fontSize=13;" vertex="1" parent="HlvREBfm2kLGhPkSsmS2-1">
+          <mxGeometry x="0.0571" y="1" width="327.7142857142857" height="30" relative="1" as="geometry">
+            <mxPoint y="-75" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HlvREBfm2kLGhPkSsmS2-13" value="CANCEL" style="whiteSpace=wrap;html=1;dashed=0;align=center;fontSize=12;shape=rect;fillColor=#FF0000;strokeColor=none;fontStyle=1;shadow=1" vertex="1" parent="HlvREBfm2kLGhPkSsmS2-1">
+          <mxGeometry x="67.00025641025641" y="260.0027848101266" width="94.87179487179486" height="27.341772151898738" as="geometry" />
+        </mxCell>
+        <mxCell id="HlvREBfm2kLGhPkSsmS2-14" value="SAVE" style="whiteSpace=wrap;html=1;dashed=0;align=center;fontSize=12;shape=rect;fillColor=#009900;strokeColor=none;fontStyle=1;shadow=1" vertex="1" parent="HlvREBfm2kLGhPkSsmS2-1">
+          <mxGeometry x="194.48717948717947" y="260.0027848101266" width="94.87179487179486" height="27.341772151898738" as="geometry" />
+        </mxCell>
+        <mxCell id="HlvREBfm2kLGhPkSsmS2-29" value="&lt;font style=&quot;color: rgb(0, 0, 0); font-size: 16px;&quot;&gt;Add Todo&lt;/font&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="HlvREBfm2kLGhPkSsmS2-1">
+          <mxGeometry x="66.41025641025641" y="7.594936708860761" width="208.7179487179487" height="22.78481012658228" as="geometry" />
+        </mxCell>
+        <mxCell id="HlvREBfm2kLGhPkSsmS2-36" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Enter todo title&lt;/font&gt;" style="text;fontSize=16;verticalAlign=middle;strokeColor=none;fillColor=none;whiteSpace=wrap;html=1;" vertex="1" parent="HlvREBfm2kLGhPkSsmS2-1">
+          <mxGeometry x="6.637179487179488" y="50.0026582278481" width="328.2564102564102" height="22.78481012658228" as="geometry" />
+        </mxCell>
+        <mxCell id="HlvREBfm2kLGhPkSsmS2-35" value="" style="dashed=0;shape=line;strokeWidth=2;noLabel=1;strokeColor=#0C8CF2;opacity=50;" vertex="1" parent="HlvREBfm2kLGhPkSsmS2-1">
+          <mxGeometry x="9.487179487179487" y="79.99746835443038" width="328.2564102564102" height="7.594936708860761" as="geometry" />
+        </mxCell>
+        <mxCell id="HlvREBfm2kLGhPkSsmS2-37" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Enter todo description&lt;/font&gt;" style="text;fontSize=16;verticalAlign=middle;strokeColor=none;fillColor=none;whiteSpace=wrap;html=1;" vertex="1" parent="HlvREBfm2kLGhPkSsmS2-1">
+          <mxGeometry x="6.6410256410256405" y="109.99924050632912" width="328.2564102564102" height="22.78481012658228" as="geometry" />
+        </mxCell>
+        <mxCell id="HlvREBfm2kLGhPkSsmS2-38" value="" style="dashed=0;shape=line;strokeWidth=2;noLabel=1;strokeColor=#0C8CF2;opacity=50;" vertex="1" parent="HlvREBfm2kLGhPkSsmS2-1">
+          <mxGeometry x="6.6410256410256405" y="140.0040506329114" width="328.2564102564102" height="7.594936708860761" as="geometry" />
+        </mxCell>
+        <mxCell id="HlvREBfm2kLGhPkSsmS2-67" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Completed&lt;/font&gt;" style="text;fontColor=#777777;fontSize=16;verticalAlign=middle;strokeColor=none;fillColor=none;whiteSpace=wrap;html=1;" vertex="1" parent="HlvREBfm2kLGhPkSsmS2-1">
+          <mxGeometry x="6.64" y="170" width="333.36" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="HlvREBfm2kLGhPkSsmS2-68" value="" style="dashed=0;shape=triangle;noLabel=1;strokeColor=none;fillColor=#cccccc;direction=south;" vertex="1" parent="HlvREBfm2kLGhPkSsmS2-67">
+          <mxGeometry x="1" y="0.5" width="10" height="5" relative="1" as="geometry">
+            <mxPoint x="-14" y="-3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HlvREBfm2kLGhPkSsmS2-70" value="" style="dashed=0;shape=line;strokeWidth=2;noLabel=1;strokeColor=#0C8CF2;opacity=50;" vertex="1" parent="HlvREBfm2kLGhPkSsmS2-1">
+          <mxGeometry x="9.189999999999998" y="210" width="328.2564102564102" height="7.594936708860761" as="geometry" />
+        </mxCell>
+        <mxCell id="HlvREBfm2kLGhPkSsmS2-34" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Enter todo title&lt;/font&gt;" style="text;fontSize=16;verticalAlign=middle;strokeColor=none;fillColor=none;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="110" width="346" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
