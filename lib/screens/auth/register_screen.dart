@@ -45,11 +45,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                     validator: (value){
                       if(value!.isEmpty) {
-
                         return "Name must not be empty!" ;
-
                       } else{
-
                         return null;
                       }
                     },
@@ -77,11 +74,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                     validator: (value){
                       if(value!.isEmpty) {
-
                         return "Username or email must not be empty!" ;
-
                       } else{
-
                         return null;
                       }
                     },
@@ -109,11 +103,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                     validator: (value){
                       if(value!.isEmpty) {
-
                         return "Email must not be empty!" ;
-
                       } else{
-
                         return null;
                       }
                     },
@@ -141,11 +132,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                     validator: (value){
                       if(value!.isEmpty) {
-
                         return "Password must not be empty!" ;
-
                       } else{
-
                         return null;
                       }
                     },

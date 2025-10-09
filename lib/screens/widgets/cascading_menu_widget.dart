@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/screens/auth/login_screen.dart';
+import 'package:todo_app/services/auth_service.dart';
 
 class CascadingMenuWidget extends StatefulWidget {
 
@@ -28,15 +29,16 @@ class _CascadingMenuWidgetState extends State<CascadingMenuWidget> {
 
       menuChildren: [
         MenuItemButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return LoginScreen();
-                  },
-                ),
-              );
+            onPressed: () async {
+              await AuthService.logout();
+              if (context.mounted) {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context){
+                      return LoginScreen();
+                    })
+                );
+              }
             },
             child: Text(
                 'Logout',

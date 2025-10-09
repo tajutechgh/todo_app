@@ -1,15 +1,20 @@
 class User{
 
-  final String name;
-  final String username;
-  final String email;
-  final String password;
+  String? name;
+  String? username;
+  String? email;
+  String? password;
 
-  User({
+  User.register({
     required this.name,
     required this.username,
     required this.email,
     required this.password
+  });
+
+  User.login({
+    required this.username,
+    required this.password,
   });
 
   Map<String, dynamic> toLoginJson() {

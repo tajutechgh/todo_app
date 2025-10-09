@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo_app/screens/auth/register_screen.dart';
+import 'package:todo_app/services/auth_service.dart';
+
+import '../../models/user.dart';
+import '../home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,9 +16,60 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  bool _isLoading = false;
   late String username;
   late String password;
+
+ void loginUser() async{
+    if(_formKey.currentState!.validate()){
+
+      setState(() {
+        _isLoading = true;
+      });
+
+      final user = User.login(
+        username: username,
+        password: password,
+      );
+
+      bool results = await AuthService.login(user);
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      if(results = true){
+
+        setState(() {
+          _isLoading = false;
+        });
+
+        Get.to(HomeScreen());
+
+        Get.snackbar(
+          "Login Success",
+          "You have successfully login to your account!",
+          backgroundColor: Colors.pink,
+          colorText: Colors.white,
+          margin: EdgeInsets.all(15),
+          icon: Icon(Icons.message, color: Colors.white,),
+        );
+
+      }else{
+
+        Get.snackbar(
+          "Error Occurred",
+          results.toString(),
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.all(15),
+          icon: Icon(Icons.message, color: Colors.white,),
+        );
+
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                      },
                     validator: (value){
                        if(value!.isEmpty) {
-                         
                          return "Username or email must not be empty!" ;
-
                        } else{
-
                          return null;
                        }
                     },
@@ -75,11 +128,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     validator: (value){
                       if(value!.isEmpty) {
-
                         return "Password must not be empty!" ;
-
                       } else{
-
                         return null;
                       }
                     },
@@ -103,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: 30,),
                   InkWell(
                     onTap: (){
-
+                       loginUser();
                     },
                     child: Container(
                       height: 50,
