@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/screens/widgets/cascading_menu_widget.dart';
+import 'package:todo_app/screens/widgets/completed_todo_widget.dart';
+import 'package:todo_app/screens/widgets/pending_todo_widget.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -8,7 +11,21 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,21 +38,42 @@ class _HomeScreenState extends State<HomeScreen> {
              color: Colors.white,
              fontSize: 24,
              fontWeight: FontWeight.bold,
+             letterSpacing: 2,
            ),
          ),
+        actions: [
+          CascadingMenuWidget()
+        ],
+        bottom: TabBar(
+          controller: _tabController,
+          labelStyle: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+              letterSpacing: 2,
+          ),
+          tabs: [
+            Tab(icon: Icon(Icons.cancel_outlined, color: Colors.red,), text: "Pending",),
+            Tab(icon: Icon(Icons.check_circle_outline, color: Colors.green,), text: "Completed",),
+          ],
+        ),
         backgroundColor: Colors.purpleAccent,
       ),
-      body: Column(
+      body: TabBarView(
+        controller: _tabController,
         children: [
-          Text("Welcome To Todo List Home Page"),
+          Center(child: PendingTodoWidget()),
+          Center(child: CompletedTodoWidget()),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
           
         },
-        backgroundColor: Colors.blueAccent,
-        child: Icon(Icons.add),
+        backgroundColor: Colors.purpleAccent,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }
