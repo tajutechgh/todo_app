@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Get.snackbar(
           "Login Success",
           "You have successfully login to your account!",
-          backgroundColor: Colors.pink,
+          backgroundColor: Colors.green,
           colorText: Colors.white,
           margin: EdgeInsets.all(15),
           icon: Icon(Icons.message, color: Colors.white,),
@@ -123,6 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 30,) ,
                   TextFormField(
+                    obscureText: true,
                     onChanged: (value){
                       password = value;
                     },

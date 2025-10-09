@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo_app/screens/auth/login_screen.dart';
+
+import '../../models/user.dart';
+import '../../services/auth_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -11,11 +15,68 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  bool _isLoading = false;
   late String name;
   late String username;
   late String email;
   late String password;
+
+  void registerUser() async{
+      if(_formKey.currentState!.validate()){
+
+        setState(() {
+          _isLoading = true;
+        });
+
+        final user = User.register(
+          name: name,
+          username: username,
+          email: email,
+          password: password,
+        );
+
+        bool results = await AuthService.register(user);
+
+        setState(() {
+          _isLoading = false;
+        });
+
+        if(results = true) {
+          setState(() {
+            _isLoading = false;
+          });
+          Get.to(LoginScreen());
+          Get.snackbar(
+            "Success",
+            "Your account has been successfully created!",
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+            margin: EdgeInsets.all(15),
+            icon: Icon(Icons.message, color: Colors.white,),
+          );
+        }else{
+          Get.snackbar(
+            "Error",
+            "An error occurred during the process, please kindly try again!",
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+            snackPosition: SnackPosition.BOTTOM,
+            margin: EdgeInsets.all(15),
+            icon: Icon(Icons.message, color: Colors.white,),
+          );
+        }
+      }else{
+        Get.snackbar(
+          "Validation",
+          "Please fill in all the required fields!",
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+          margin: EdgeInsets.all(15),
+          icon: Icon(Icons.message, color: Colors.white,),
+        );
+      }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +135,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                     validator: (value){
                       if(value!.isEmpty) {
-                        return "Username or email must not be empty!" ;
+                        return "Username must not be empty!" ;
                       } else{
                         return null;
                       }
@@ -127,6 +188,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   SizedBox(height: 30,) ,
                   TextFormField(
+                    obscureText: true,
                     onChanged: (value){
                       password = value;
                     },
@@ -157,7 +219,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   SizedBox(height: 30,),
                   InkWell(
                     onTap: (){
-
+                       registerUser();
                     },
                     child: Container(
                       height: 50,

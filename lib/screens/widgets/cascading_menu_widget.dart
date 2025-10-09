@@ -40,13 +40,18 @@ class _CascadingMenuWidgetState extends State<CascadingMenuWidget> {
                 );
               }
             },
-            child: Text(
-                'Logout',
-                 style: TextStyle(
-                   letterSpacing: 2,
-                   fontSize: 15,
-                   fontWeight: FontWeight.bold,
-                 ),
+            child: Row(
+              children: [
+                Icon(Icons.logout, color: Colors.red, size: 20,),
+                Text(
+                    'Logout',
+                     style: TextStyle(
+                       letterSpacing: 2,
+                       fontSize: 15,
+                       fontWeight: FontWeight.bold,
+                     ),
+                ),
+              ],
             )
         ),
       ],
