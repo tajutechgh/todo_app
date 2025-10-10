@@ -5,7 +5,7 @@ class Todo {
   final String title;
   final String description;
   final bool completed;
-  final Int userId;
+  final int userId;
 
   Todo({
     required this.title,

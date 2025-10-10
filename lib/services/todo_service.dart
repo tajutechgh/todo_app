@@ -4,14 +4,27 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/models/todo.dart';
 
-class ApiService {
+class TodoService {
 
   static const String baseUrl = "http://localhost:8080/api/v1/todos";
 
   // GET all todos
   static Future<List<Todo>> fetchAllTodos() async {
 
-    final response = await http.get(Uri.parse('$baseUrl/all'));
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('jwt_token');
+
+    if (token == null) return [];
+
+    final response = await http.get(
+
+      Uri.parse('$baseUrl/all'),
+
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+    );
 
     if (response.statusCode == 200) {
 
@@ -20,6 +33,10 @@ class ApiService {
       return body.map((e) => Todo.fromJson(e)).toList();
 
     } else {
+
+      if (kDebugMode) {
+        print('Failed to load all todos: ${response.statusCode}');
+      }
 
       throw Exception('Failed to load all todos');
     }
@@ -28,7 +45,20 @@ class ApiService {
   // GET all completed todos
   static Future<List<Todo>> fetchAllCompletedTodos() async {
 
-    final response = await http.get(Uri.parse('$baseUrl/completed'));
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('jwt_token');
+
+    if (token == null) return [];
+
+    final response = await http.get(
+
+      Uri.parse('$baseUrl/completed'),
+
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+    );
 
     if (response.statusCode == 200) {
 
@@ -37,6 +67,10 @@ class ApiService {
       return body.map((e) => Todo.fromJson(e)).toList();
 
     } else {
+
+      if (kDebugMode) {
+        print('Failed to load all completed todos: ${response.statusCode}');
+      }
 
       throw Exception('Failed to load all completed todos');
     }
