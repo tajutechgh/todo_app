@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLoading = false;
       });
 
-      if(results = true){
+      if(results == true){
 
         setState(() {
           _isLoading = false;
@@ -58,8 +58,8 @@ class _LoginScreenState extends State<LoginScreen> {
       }else{
 
         Get.snackbar(
-          "Error Occurred",
-          results.toString(),
+          "Authentication Error",
+          "Please check your credentials very well!",
           backgroundColor: Colors.red,
           colorText: Colors.white,
           snackPosition: SnackPosition.BOTTOM,

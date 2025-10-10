@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/screens/widgets/cascading_menu_widget.dart';
 import 'package:todo_app/screens/widgets/completed_todo_widget.dart';
 import 'package:todo_app/screens/widgets/pending_todo_widget.dart';
+
+import '../services/auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -12,6 +15,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  String? username;
+  String? role;
 
   late final TabController _tabController;
 
@@ -19,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _loadUserData();
   }
 
   @override
@@ -27,16 +33,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  Future<void> _loadUserData() async {
+    final name = await AuthService.getCurrentUsername();
+    final userRole = await AuthService.getUserRole();
+
+    setState(() {
+      username = name;
+      role = userRole;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.white
+        ),
          title: Text(
-           "Todo List",
+           username != null ? "Welcome, $username" : "Todo List",
            style: TextStyle(
              color: Colors.white,
-             fontSize: 24,
+             fontSize: 20,
              fontWeight: FontWeight.bold,
              letterSpacing: 2,
            ),

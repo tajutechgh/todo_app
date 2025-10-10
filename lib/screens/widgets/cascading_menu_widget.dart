@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/screens/auth/login_screen.dart';
+import 'package:todo_app/screens/user_profile_screen.dart';
 import 'package:todo_app/services/auth_service.dart';
 
 class CascadingMenuWidget extends StatefulWidget {
@@ -28,6 +29,31 @@ class _CascadingMenuWidgetState extends State<CascadingMenuWidget> {
       childFocusNode: _buttonFocusNode,
 
       menuChildren: [
+        MenuItemButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return UserProfileScreen();
+                  },
+                ),
+              );
+            },
+            child: Row(
+              children: [
+                Icon(Icons.person_2_rounded, color: Colors.orange, size: 20,),
+                Text(
+                  'Profile',
+                  style: TextStyle(
+                    letterSpacing: 2,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            )
+        ),
         MenuItemButton(
             onPressed: () async {
               await AuthService.logout();
