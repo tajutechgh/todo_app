@@ -79,7 +79,20 @@ class TodoService {
   // GET all pending todos
   static Future<List<Todo>> fetchAllPendingTodos() async {
 
-    final response = await http.get(Uri.parse('$baseUrl/pending'));
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('jwt_token');
+
+    if (token == null) return [];
+
+    final response = await http.get(
+
+      Uri.parse('$baseUrl/pending'),
+
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+    );
 
     if (response.statusCode == 200) {
 
@@ -88,6 +101,10 @@ class TodoService {
       return body.map((e) => Todo.fromJson(e)).toList();
 
     } else {
+
+      if (kDebugMode) {
+        print('Failed to load all pending todos: ${response.statusCode}');
+      }
 
       throw Exception('Failed to load all pending todos');
     }

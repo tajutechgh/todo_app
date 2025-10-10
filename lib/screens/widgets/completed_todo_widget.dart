@@ -27,7 +27,7 @@ class _CompletedTodoWidgetState extends State<CompletedTodoWidget> {
 
   void refreshCompletedTodos(){
     setState(() {
-      futureCompletedTodos = TodoService.fetchAllCompletedTodos(); //there is a problem here i need to solve
+      futureCompletedTodos = TodoService.fetchAllCompletedTodos();
     });
   }
 
@@ -50,7 +50,7 @@ class _CompletedTodoWidgetState extends State<CompletedTodoWidget> {
 
         } else if (snapshot.data == null || snapshot.data!.isEmpty) {
 
-          return const Center(child: Text('No todos found'));
+          return const Center(child: Text('No completed todo list found'));
 
         } else {
 
@@ -109,7 +109,7 @@ class _CompletedTodoWidgetState extends State<CompletedTodoWidget> {
                               child: Row(
                                 children: [
                                   Icon(Icons.edit, color: Colors.green, size: 30,),
-                                  Text("Edit", style: TextStyle(fontSize: 15, letterSpacing: 2),)
+                                  Text("Edit", style: TextStyle(fontSize: 15, letterSpacing: 1),)
                                 ],
                               ),
                             ),
@@ -121,7 +121,7 @@ class _CompletedTodoWidgetState extends State<CompletedTodoWidget> {
                               child: Row(
                                 children: [
                                   Icon(Icons.delete, color: Colors.red, size: 30,),
-                                  Text("Delete", style: TextStyle(fontSize: 15, letterSpacing: 2),)
+                                  Text("Delete", style: TextStyle(fontSize: 15, letterSpacing: 1),)
                                 ],
                               ),
                             ),
@@ -133,7 +133,7 @@ class _CompletedTodoWidgetState extends State<CompletedTodoWidget> {
                               child: Row(
                                 children: [
                                   Icon(Icons.cancel_outlined, color: Colors.red, size: 30,),
-                                  Text("Pending", style: TextStyle(fontSize: 15, letterSpacing: 2),)
+                                  Text("Pending", style: TextStyle(fontSize: 15, letterSpacing: 1),)
                                 ],
                               ),
                             ),

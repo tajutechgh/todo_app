@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
              color: Colors.white,
              fontSize: 20,
              fontWeight: FontWeight.bold,
-             letterSpacing: 2,
+             letterSpacing: 1,
            ),
          ),
         actions: [
@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           labelStyle: TextStyle(
               fontSize: 20,
               color: Colors.white,
-              letterSpacing: 2,
+              letterSpacing: 1,
           ),
           tabs: [
             Tab(icon: Icon(Icons.list, color: Colors.redAccent, fontWeight: FontWeight.bold, size: 30,), text: "Pending",),

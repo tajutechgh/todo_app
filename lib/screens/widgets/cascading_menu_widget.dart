@@ -46,7 +46,7 @@ class _CascadingMenuWidgetState extends State<CascadingMenuWidget> {
                 Text(
                   'Profile',
                   style: TextStyle(
-                    letterSpacing: 2,
+                    letterSpacing: 1,
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
                   ),
@@ -72,7 +72,7 @@ class _CascadingMenuWidgetState extends State<CascadingMenuWidget> {
                 Text(
                     'Logout',
                      style: TextStyle(
-                       letterSpacing: 2,
+                       letterSpacing: 1,
                        fontSize: 15,
                        fontWeight: FontWeight.bold,
                      ),
