@@ -54,6 +54,25 @@ class _PendingTodoWidgetState extends State<PendingTodoWidget> {
     );
   }
 
+  // check pending todo completed function
+  Future<void> completedTodo(int? id) async {
+
+    if (id == null) return;
+
+    await TodoService.completeTodo(id);
+
+    refreshPendingTodos();
+
+    Get.snackbar(
+      "Complete Todo",
+      "You have successfully completed this todo!",
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+      margin: EdgeInsets.all(15),
+      icon: Icon(Icons.message, color: Colors.white,),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -153,7 +172,7 @@ class _PendingTodoWidgetState extends State<PendingTodoWidget> {
                                 ),
                                 PopupMenuItem<ListTileTitleAlignment>(
                                   onTap: (){
-
+                                      completedTodo(todo.id);
                                   },
                                   value: ListTileTitleAlignment.top,
                                   child: Row(

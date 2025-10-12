@@ -208,7 +208,7 @@ class TodoService {
   }
 
   // PATCH check todo complete
-  Future<void> completeTodo(int id) async {
+  static Future<void> completeTodo(int id) async {
 
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('jwt_token');
@@ -240,7 +240,7 @@ class TodoService {
   }
 
   // PATCH check todo pending
-  Future<void> pendingTodo(int id) async {
+  static Future<void> pendingTodo(int id) async {
 
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('jwt_token');
