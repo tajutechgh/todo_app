@@ -39,12 +39,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _refreshTodos();
     _loadUserData();
     _loadUserProfile();
-    refreshTodos();
   }
 
-  void refreshTodos(){
+  void _refreshTodos(){
     setState(() {
       futurePendingTodos = TodoService.fetchAllPendingTodos();
       futureCompletedTodos = TodoService.fetchAllCompletedTodos();
@@ -220,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
                   Navigator.of(context).pop();
 
-                  refreshTodos();
+                  _refreshTodos();
                 }
               },
 
