@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   // creating and editing dialog function
-  void showTodoDialog({Todo? todo}) {
+  Future<void> showTodoDialog({Todo? todo}) async {
 
     titleController.text = todo?.title?? "";
     descriptionController.text = todo?.description?? "";
@@ -245,8 +245,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       body: TabBarView(
         controller: _tabController,
         children: [
-          Center(child: PendingTodoWidget()),
-          Center(child: CompletedTodoWidget()),
+          Center(child: PendingTodoWidget(onRefresh: showTodoDialog)),
+          Center(child: CompletedTodoWidget(onRefresh: showTodoDialog)),
         ],
       ),
       floatingActionButton: FloatingActionButton(

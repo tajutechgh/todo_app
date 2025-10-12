@@ -171,9 +171,25 @@ class TodoService {
   // DELETE todo
   static Future<void> deleteTodo(int id) async {
 
-    final response = await http.delete(Uri.parse('$baseUrl/delete/$id'));
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('jwt_token');
+
+    if (token == null) return;
+
+    final response = await http.delete(
+
+        Uri.parse('$baseUrl/delete/$id'),
+
+        headers: {
+          'Authorization': token,
+        },
+    );
 
     if (response.statusCode != 200) {
+
+      if (kDebugMode) {
+        print('Failed to create todo, code: ${response.statusCode}');
+      }
 
       throw Exception('Failed to delete todo');
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo_app/services/todo_service.dart';
 
 import '../../models/todo.dart';
@@ -6,7 +7,9 @@ import '../../services/auth_service.dart';
 
 class CompletedTodoWidget extends StatefulWidget {
 
-  const CompletedTodoWidget({super.key});
+  final Future<void> Function()? onRefresh;
+
+  const CompletedTodoWidget({super.key,  this.onRefresh});
 
   @override
   State<CompletedTodoWidget> createState() => _CompletedTodoWidgetState();
@@ -30,6 +33,25 @@ class _CompletedTodoWidgetState extends State<CompletedTodoWidget> {
     setState(() {
       futureCompletedTodos = TodoService.fetchAllCompletedTodos();
     });
+  }
+
+  // deleting function
+  Future<void> deleteCompletedTodo(int? id) async {
+
+    if (id == null) return;
+
+    await TodoService.deleteTodo(id);
+
+    refreshCompletedTodos();
+
+    Get.snackbar(
+      "Delete Todo",
+      "You have successfully deleted this todo!",
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+      margin: EdgeInsets.all(15),
+      icon: Icon(Icons.message, color: Colors.white,),
+    );
   }
 
   @override
@@ -65,85 +87,88 @@ class _CompletedTodoWidgetState extends State<CompletedTodoWidget> {
 
                 final todo = todos[index];
 
-                return Column(
-                  children: [
-                    Card(
-                      margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-                      color: Colors.deepOrangeAccent,
-                      child: ListTile(
-                        titleAlignment: titleAlignment,
-                        title: Text(
-                          //todo title
-                          todo.title,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1,
-                              color: Colors.white
-                          ),
-                        ),
-                        subtitle: Text(
-                          //todo description
-                          todo.description,
-                          style: TextStyle(
-                              fontSize: 15,
-                              letterSpacing: 1,
-                              color: Colors.white
-                          ),
-                        ),
-                        trailing: PopupMenuButton<ListTileTitleAlignment>(
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all(Colors.white),
-                            elevation: WidgetStateProperty.all(4),
-                          ),
-                          onSelected: (ListTileTitleAlignment? value) {
-                            setState(() {
-                              titleAlignment = value;
-                            });
-                          },
-                          itemBuilder: (BuildContext context) =>
-                          <PopupMenuEntry<ListTileTitleAlignment>>[
-                            PopupMenuItem<ListTileTitleAlignment>(
-                              onTap: (){
-
-                              },
-                              value: ListTileTitleAlignment.threeLine,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.edit, color: Colors.green, size: 30,),
-                                  Text("Edit", style: TextStyle(fontSize: 15, letterSpacing: 1),)
-                                ],
-                              ),
+                return RefreshIndicator(
+                  onRefresh: widget.onRefresh ?? () async {},
+                  child: Column(
+                    children: [
+                      Card(
+                        margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                        color: Colors.deepOrangeAccent,
+                        child: ListTile(
+                          titleAlignment: titleAlignment,
+                          title: Text(
+                            //todo title
+                            todo.title,
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                                color: Colors.white
                             ),
-                            PopupMenuItem<ListTileTitleAlignment>(
-                              onTap: (){
-
-                              },
-                              value: ListTileTitleAlignment.titleHeight,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.delete, color: Colors.red, size: 30,),
-                                  Text("Delete", style: TextStyle(fontSize: 15, letterSpacing: 1),)
-                                ],
-                              ),
+                          ),
+                          subtitle: Text(
+                            //todo description
+                            todo.description,
+                            style: TextStyle(
+                                fontSize: 15,
+                                letterSpacing: 1,
+                                color: Colors.white
                             ),
-                            PopupMenuItem<ListTileTitleAlignment>(
-                              onTap: (){
-
-                              },
-                              value: ListTileTitleAlignment.top,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.cancel_outlined, color: Colors.red, size: 30,),
-                                  Text("Pending", style: TextStyle(fontSize: 15, letterSpacing: 1),)
-                                ],
-                              ),
+                          ),
+                          trailing: PopupMenuButton<ListTileTitleAlignment>(
+                            style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all(Colors.white),
+                              elevation: WidgetStateProperty.all(4),
                             ),
-                          ],
+                            onSelected: (ListTileTitleAlignment? value) {
+                              setState(() {
+                                titleAlignment = value;
+                              });
+                            },
+                            itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<ListTileTitleAlignment>>[
+                              PopupMenuItem<ListTileTitleAlignment>(
+                                onTap: (){
+                                  widget.onRefresh?.call();
+                                },
+                                value: ListTileTitleAlignment.threeLine,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.edit, color: Colors.green, size: 30,),
+                                    Text("Edit", style: TextStyle(fontSize: 15, letterSpacing: 1),)
+                                  ],
+                                ),
+                              ),
+                              PopupMenuItem<ListTileTitleAlignment>(
+                                onTap: (){
+                                  deleteCompletedTodo(todo.id);
+                                },
+                                value: ListTileTitleAlignment.titleHeight,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.delete, color: Colors.red, size: 30,),
+                                    Text("Delete", style: TextStyle(fontSize: 15, letterSpacing: 1),)
+                                  ],
+                                ),
+                              ),
+                              PopupMenuItem<ListTileTitleAlignment>(
+                                onTap: (){
+
+                                },
+                                value: ListTileTitleAlignment.top,
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.cancel_outlined, color: Colors.red, size: 30,),
+                                    Text("Pending", style: TextStyle(fontSize: 15, letterSpacing: 1),)
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
           });
         }
