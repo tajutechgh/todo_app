@@ -60,7 +60,7 @@ class AuthService {
       await prefs.setString('token_type', tokenType);
 
       if (kDebugMode) {
-        print('Token saved successfully!');;
+        print('Token saved successfully!');
       }
 
       return true;

@@ -1,13 +1,14 @@
-import 'dart:ffi';
 
 class Todo {
 
+  int? id;
   final String title;
   final String description;
   final bool completed;
   final int userId;
 
   Todo({
+    this.id,
     required this.title,
     required this.description,
     required this.completed,
@@ -16,6 +17,7 @@ class Todo {
 
   factory Todo.fromJson(Map<String, dynamic> json) {
     return Todo(
+      id: json['id'],
       title: json['title'],
       description: json['description'],
       completed: json['completed'],

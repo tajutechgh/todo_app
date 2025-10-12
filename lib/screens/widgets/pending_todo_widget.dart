@@ -67,6 +67,7 @@ class _PendingTodoWidgetState extends State<PendingTodoWidget> {
                   return Column(
                     children: [
                       Card(
+                        margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                         color: Colors.pinkAccent,
                         child: ListTile(
                           titleAlignment: titleAlignment,

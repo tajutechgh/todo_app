@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/services/todo_service.dart';
 
 import '../../models/todo.dart';
+import '../../services/auth_service.dart';
 
 class CompletedTodoWidget extends StatefulWidget {
 
@@ -67,6 +68,7 @@ class _CompletedTodoWidgetState extends State<CompletedTodoWidget> {
                 return Column(
                   children: [
                     Card(
+                      margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                       color: Colors.deepOrangeAccent,
                       child: ListTile(
                         titleAlignment: titleAlignment,
@@ -143,7 +145,6 @@ class _CompletedTodoWidgetState extends State<CompletedTodoWidget> {
                     ),
                   ],
                 );
-
           });
         }
       }

@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontSize: 24,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 4
+                      letterSpacing: 2
                     ),
                   ),
                   SizedBox(height: 30,),
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                      },
                     validator: (value){
                        if(value!.isEmpty) {
-                         return "Username or email must not be empty!" ;
+                         return "Username must not be empty!" ;
                        } else{
                          return null;
                        }
@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Colors.white,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            letterSpacing: 2
+                            letterSpacing: 1
                         ),
                       ),
                       focusColor: Colors.blue,
@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              letterSpacing: 2
+                              letterSpacing: 1
                           ),
                         ),
                         focusColor: Colors.blue,
@@ -169,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 22,
-                            letterSpacing: 4,
+                            letterSpacing: 2,
                             fontWeight: FontWeight.bold,
                           ),
                       )
@@ -189,11 +189,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     },
                     child: Text(
-                      "Don't have an account ?  Register",
+                      "Don't have an account? Register",
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 2,
+                        letterSpacing: 1,
                         color: Colors.white,
                       ),
                     ),

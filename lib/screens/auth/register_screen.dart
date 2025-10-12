@@ -96,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         fontSize: 24,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 4
+                        letterSpacing: 2
                     ),
                   ),
                   SizedBox(height: 30,),
@@ -118,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              letterSpacing: 2
+                              letterSpacing: 1
                           ),
                         ),
                         focusColor: Colors.blue,
@@ -147,7 +147,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              letterSpacing: 2
+                              letterSpacing: 1
                           ),
                         ),
                         focusColor: Colors.blue,
@@ -176,7 +176,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              letterSpacing: 2
+                              letterSpacing: 1
                           ),
                         ),
                         focusColor: Colors.blue,
@@ -206,7 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              letterSpacing: 2
+                              letterSpacing: 1
                           ),
                         ),
                         focusColor: Colors.blue,
@@ -234,7 +234,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 22,
-                              letterSpacing: 4,
+                              letterSpacing: 2,
                               fontWeight: FontWeight.bold,
                             ),
                           )
@@ -254,11 +254,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       );
                     },
                     child: Text(
-                      "Already having an account ?  Login",
+                      "Already having an account? Login",
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 2,
+                        letterSpacing: 1,
                         color: Colors.white,
                       ),
                     ),

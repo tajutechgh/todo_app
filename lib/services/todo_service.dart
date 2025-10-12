@@ -35,7 +35,7 @@ class TodoService {
     } else {
 
       if (kDebugMode) {
-        print('Failed to load all todos: ${response.statusCode}');
+        print('Failed to load all todos, code: ${response.statusCode}');
       }
 
       throw Exception('Failed to load all todos');
@@ -69,7 +69,7 @@ class TodoService {
     } else {
 
       if (kDebugMode) {
-        print('Failed to load all completed todos: ${response.statusCode}');
+        print('Failed to load all completed todos, code: ${response.statusCode}');
       }
 
       throw Exception('Failed to load all completed todos');
@@ -103,7 +103,7 @@ class TodoService {
     } else {
 
       if (kDebugMode) {
-        print('Failed to load all pending todos: ${response.statusCode}');
+        print('Failed to load all pending todos, code: ${response.statusCode}');
       }
 
       throw Exception('Failed to load all pending todos');
@@ -111,13 +111,21 @@ class TodoService {
   }
 
   // POST create new todo
-  static Future<Todo> createTodo(Todo todo) async {
+  static Future<Todo?> createTodo(Todo todo) async {
+
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('jwt_token');
+
+    if (token == null) return null;
 
     final response = await http.post(
 
       Uri.parse('$baseUrl/create'),
 
-      headers: {'Content-Type': 'application/json; charset=UTF-8'},
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': token,
+      },
 
       body: jsonEncode(todo.toJson()),
 
@@ -128,6 +136,10 @@ class TodoService {
       return Todo.fromJson(jsonDecode(response.body));
 
     } else {
+
+      if (kDebugMode) {
+        print('Failed to create todo, code: ${response.statusCode}');
+      }
 
       throw Exception('Failed to create new todo');
     }
