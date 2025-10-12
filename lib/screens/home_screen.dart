@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   // creating and editing dialog function
-  Future<void> showTodoDialog({Todo? todo}) async {
+  Future<void> showTodoDialog([Todo? todo]) async {
 
     titleController.text = todo?.title?? "";
     descriptionController.text = todo?.description?? "";
@@ -178,11 +178,41 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     );
                   }
                 } else {
+
+                  if (!formKey.currentState!.validate()) return;
+
+                  final title = titleController.text.trim();
+                  final description = descriptionController.text.trim();
+
                   if (todo.id != null) {
-                    await TodoService.updateTodo(
+                    Todo? results = await TodoService.updateTodo(
                       todo.id!,
                       Todo(title: title, description: description, completed: todo.completed, userId: todo.userId),
                     );
+
+                    setState(() => _isLoading = false);
+
+                    if (results != null) {
+                      Get.to(HomeScreen());
+                      Get.snackbar(
+                        "Update Todo",
+                        "You have successfully updated the todo!",
+                        backgroundColor: Colors.green,
+                        colorText: Colors.white,
+                        margin: EdgeInsets.all(15),
+                        icon: Icon(Icons.message, color: Colors.white,),
+                      );
+                    } else {
+                      Get.snackbar(
+                        "Update Todo",
+                        "An error occurred while updating todo!!",
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white,
+                        snackPosition: SnackPosition.BOTTOM,
+                        margin: EdgeInsets.all(15),
+                        icon: Icon(Icons.message, color: Colors.white,),
+                      );
+                    }
                   }
                 }
 
@@ -245,8 +275,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       body: TabBarView(
         controller: _tabController,
         children: [
-          Center(child: PendingTodoWidget(onRefresh: showTodoDialog)),
-          Center(child: CompletedTodoWidget(onRefresh: showTodoDialog)),
+          Center(child: PendingTodoWidget(
+              onRefresh: ([todo])  async {
+                await showTodoDialog(todo);
+              }
+          )),
+          Center(child: CompletedTodoWidget(
+              onRefresh: ([todo])  async {
+                await showTodoDialog(todo);
+              }
+          )),
         ],
       ),
       floatingActionButton: FloatingActionButton(

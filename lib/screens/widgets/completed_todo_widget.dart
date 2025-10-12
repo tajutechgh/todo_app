@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:todo_app/services/todo_service.dart';
 
 import '../../models/todo.dart';
-import '../../services/auth_service.dart';
 
 class CompletedTodoWidget extends StatefulWidget {
 
-  final Future<void> Function()? onRefresh;
+  // use this to call the showTodoDialogue method from the home page
+  final Future<void> Function([Todo? todo])? onRefresh;
 
   const CompletedTodoWidget({super.key,  this.onRefresh});
 
@@ -129,7 +129,7 @@ class _CompletedTodoWidgetState extends State<CompletedTodoWidget> {
                             <PopupMenuEntry<ListTileTitleAlignment>>[
                               PopupMenuItem<ListTileTitleAlignment>(
                                 onTap: (){
-                                  widget.onRefresh?.call();
+                                  widget.onRefresh?.call(todo);
                                 },
                                 value: ListTileTitleAlignment.threeLine,
                                 child: Row(

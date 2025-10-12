@@ -6,7 +6,8 @@ import '../../services/todo_service.dart';
 
 class PendingTodoWidget extends StatefulWidget {
 
-  final Future<void> Function()? onRefresh;
+  // use this to call the showTodoDialogue method from the home page
+  final Future<void> Function([Todo? todo])? onRefresh;
 
   const PendingTodoWidget({super.key, this.onRefresh});
 
@@ -128,7 +129,7 @@ class _PendingTodoWidgetState extends State<PendingTodoWidget> {
                               <PopupMenuEntry<ListTileTitleAlignment>>[
                                 PopupMenuItem<ListTileTitleAlignment>(
                                   onTap: (){
-                                    widget.onRefresh?.call();
+                                    widget.onRefresh?.call(todo);
                                   },
                                   value: ListTileTitleAlignment.threeLine,
                                   child: Row(

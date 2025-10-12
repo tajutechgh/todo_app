@@ -146,13 +146,21 @@ class TodoService {
   }
 
   // PUT update todo
-  static Future<Todo> updateTodo(int id, Todo todo) async {
+  static Future<Todo?> updateTodo(int id, Todo todo) async {
+
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('jwt_token');
+
+    if (token == null) return null;
 
     final response = await http.put(
 
       Uri.parse('$baseUrl/update/$id'),
 
-      headers: {'Content-Type': 'application/json; charset=UTF-8'},
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': token,
+      },
 
       body: jsonEncode(todo.toJson()),
 
@@ -163,6 +171,10 @@ class TodoService {
       return Todo.fromJson(jsonDecode(response.body));
 
     } else {
+
+      if (kDebugMode) {
+        print('Failed to update todo, code: ${response.statusCode}');
+      }
 
       throw Exception('Failed to update todo');
     }
