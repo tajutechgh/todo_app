@@ -4,6 +4,7 @@ import 'package:todo_app/screens/widgets/cascading_menu_widget.dart';
 import 'package:todo_app/screens/widgets/completed_todo_widget.dart';
 import 'package:todo_app/screens/widgets/pending_todo_widget.dart';
 import 'package:todo_app/services/todo_service.dart';
+import 'package:todo_app/services/user_service.dart';
 
 import '../models/todo.dart';
 import '../services/auth_service.dart';
@@ -71,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   // load current user profile
   Future<void> _loadUserProfile() async {
 
-    final profile = await AuthService.fetchUserProfile();
+    final profile = await UserService.fetchUserProfile();
 
     if (profile != null) {
       setState(() {

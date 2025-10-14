@@ -10,7 +10,7 @@ class AuthService {
 
   final storage = const FlutterSecureStorage();
 
-  static const String baseUrl = "http://localhost:8080/api/v1/auth";
+  static const String baseUrl = "http://10.0.2.2:8080/api/v1/auth";
 
   static Future<bool> register(User user) async {
 
@@ -99,39 +99,6 @@ class AuthService {
     final prefs = await SharedPreferences.getInstance();
 
     return prefs.getString('role');
-  }
-
-  static Future<Map<String, dynamic>?> fetchUserProfile() async {
-
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('jwt_token');
-
-    if (token == null) return null;
-
-    final response = await http.get(
-
-      Uri.parse('$baseUrl/current-user'),
-
-      headers: {
-        'Authorization': token,
-        'Content-Type': 'application/json',
-      },
-    );
-
-    if (response.statusCode == 200) {
-
-      final data = jsonDecode(response.body);
-
-      return data;
-
-    } else {
-
-      if (kDebugMode) {
-        print('Failed to load user profile: ${response.body}');
-      }
-
-      return null;
-    }
   }
 
   static Future<void> logout() async {

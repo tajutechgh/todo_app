@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/screens/widgets/cascading_menu_widget.dart';
+import 'package:todo_app/services/user_service.dart';
 import '../services/auth_service.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   Future<void> _loadProfile() async {
-    final profile = await AuthService.fetchUserProfile();
+    final profile = await UserService.fetchUserProfile();
 
     if (mounted) {
       setState(() {
