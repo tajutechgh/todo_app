@@ -12,6 +12,7 @@ class AuthService {
 
   static const String baseUrl = "http://10.0.2.2:8080/api/v1/auth";
 
+  // register user
   static Future<bool> register(User user) async {
 
     final response = await http.post(
@@ -26,6 +27,7 @@ class AuthService {
     return response.statusCode == 200 || response.statusCode == 201;
   }
 
+  // login user
   static Future<bool> login(User user) async {
 
     final response = await http.post(
@@ -76,6 +78,7 @@ class AuthService {
     }
   }
 
+  // get jwt token
   static Future<String?> getToken() async {
 
     final prefs = await SharedPreferences.getInstance();
@@ -83,6 +86,7 @@ class AuthService {
     return prefs.getString('jwt_token');
   }
 
+  // get current user name
   static Future<String?> getCurrentUsername() async {
 
     final prefs = await SharedPreferences.getInstance();
@@ -95,12 +99,14 @@ class AuthService {
     return decodedToken['sub'];
   }
 
+  // get current user role
   static Future<String?> getUserRole() async {
     final prefs = await SharedPreferences.getInstance();
 
     return prefs.getString('role');
   }
 
+  // logout of your account
   static Future<void> logout() async {
 
     final prefs = await SharedPreferences.getInstance();
