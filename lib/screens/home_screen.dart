@@ -267,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               letterSpacing: 1,
           ),
           tabs: [
-            Tab(icon: Icon(Icons.list, color: Colors.redAccent, fontWeight: FontWeight.bold, size: 30,), text: "Pending",),
+            Tab(icon: Icon(Icons.list, color: Colors.red, fontWeight: FontWeight.bold, size: 30,), text: "Pending",),
             Tab(icon: Icon(Icons.list, color: Colors.green, fontWeight: FontWeight.bold, size: 30,), text: "Completed",),
           ],
         ),

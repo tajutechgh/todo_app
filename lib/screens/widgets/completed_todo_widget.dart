@@ -112,7 +112,7 @@ class _CompletedTodoWidgetState extends State<CompletedTodoWidget> {
                     children: [
                       Card(
                         margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-                        color: Colors.deepOrangeAccent,
+                        color: Colors.green,
                         child: ListTile(
                           titleAlignment: titleAlignment,
                           title: Text(
