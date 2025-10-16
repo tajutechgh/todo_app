@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/screens/auth/register_screen.dart';
+import 'package:todo_app/screens/todo_main_screen.dart';
 import 'package:todo_app/services/auth_service.dart';
 
 import '../../models/user.dart';
@@ -44,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _isLoading = false;
         });
 
-        Get.to(HomeScreen());
+        Get.to(TodoMainScreen());
 
         Get.snackbar(
           "Login Success",

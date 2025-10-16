@@ -222,12 +222,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             
             final user = snapshot.data;
 
-            return isLoading
-                ? const Center(
-                child: CircularProgressIndicator(color: Colors.purpleAccent))
-                : RefreshIndicator(
+            return isLoading ? const Center(child: CircularProgressIndicator(color: Colors.purpleAccent)) : RefreshIndicator(
               color: Colors.purpleAccent,
               onRefresh: _loadProfile,
+              
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(20),

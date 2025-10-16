@@ -21,7 +21,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   late int userId;
   String? username;
-  String? role;
 
   late final TabController _tabController;
 
@@ -41,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     _refreshTodos();
-    _loadUserData();
+    _loadCurrentUserName();
     _loadUserProfile();
   }
 
@@ -59,13 +58,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   // load current user data
-  Future<void> _loadUserData() async {
+  Future<void> _loadCurrentUserName() async {
+    
     final name = await AuthService.getCurrentUsername();
-    final userRole = await AuthService.getUserRole();
 
     setState(() {
       username = name;
-      role = userRole;
     });
   }
 

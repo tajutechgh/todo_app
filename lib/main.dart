@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/screens/auth/login_screen.dart';
-import 'package:todo_app/screens/home_screen.dart';
+import 'package:todo_app/screens/todo_main_screen.dart';
 import 'package:todo_app/services/auth_service.dart';
 
 Future<void> main() async {
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
 
-      home: isLoggedIn ? const HomeScreen() : const LoginScreen(),
+      home: isLoggedIn ? const TodoMainScreen() : const LoginScreen(),
 
       debugShowCheckedModeBanner: false,
     );

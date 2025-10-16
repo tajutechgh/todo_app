@@ -46,6 +46,7 @@ class AuthService {
       // Correct key name
       final token = body['accessToken'];
       final tokenType = body['tokenType'] ?? 'Bearer';
+      final role = body['role'];
 
       if (token == null) {
 
@@ -60,6 +61,7 @@ class AuthService {
 
       await prefs.setString('jwt_token', 'Bearer $token');
       await prefs.setString('token_type', tokenType);
+      await prefs.setString('role', role);
 
       if (kDebugMode) {
         print('Token saved successfully!');
@@ -101,6 +103,7 @@ class AuthService {
 
   // get current user role
   static Future<String?> getUserRole() async {
+    
     final prefs = await SharedPreferences.getInstance();
 
     return prefs.getString('role');
