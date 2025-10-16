@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:todo_app/services/todo_service.dart';
 
 import '../models/todo.dart';
 import '../services/auth_service.dart';
+import '../services/user_service.dart';
 import 'widgets/cascading_menu_widget.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
@@ -14,12 +16,24 @@ class AdminDashboardScreen extends StatefulWidget {
 
 class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool _isFormLoading = false;
+
   late Future<List<Todo>>  futureTodos;
+  
   bool _loading = true;
 
   String? username;
 
   String? role;
+
+  int? userId;
+  String? name;
+  String? email;
+  String? password;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -27,6 +41,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     _loadCurrentUserName();
     _loadRole();
     _refreshTodos();
+    _loadProfile();
   }
 
   Future<void> _loadCurrentUserName() async {
@@ -47,12 +62,183 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     });
   }
 
+  Future<void> _loadProfile() async {
+
+    final profile = await UserService.fetchUserProfile();
+
+    if (mounted) {
+      setState(() {
+        userId = profile?['id'];
+        name = profile?['name'];
+        email = profile?['email'];
+        password = profile?['password'];
+        isLoading = false;
+      });
+    }
+  }
+
   void _refreshTodos() {
     
     setState(() {
       futureTodos = TodoService.fetchAllTodos();
       _loading = false;
     });
+  }
+
+  // creating and editing dialog function
+  void showTodoDialog({Todo? todo}) {
+
+    titleController.text = todo?.title?? "";
+    descriptionController.text = todo?.description?? "";
+
+    showDialog(context: context, builder: (context) {
+      return Form(
+        key: formKey,
+        child: AlertDialog(
+          title: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                todo == null ? 'Add Todo' : 'Edit Todo',
+                style: TextStyle(
+                  letterSpacing: 1,
+                  fontSize: 30,
+                ),
+              ),
+            ],
+          ),
+
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: titleController,
+                validator: (value){
+                  if (value == null || value.isEmpty) {
+                    return 'This field is required';
+                  }else{
+                    return null;
+                  }
+                },
+                decoration: const InputDecoration(labelText: 'Todo Title'),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: descriptionController,
+                validator: (value){
+                  if (value == null || value.isEmpty) {
+                    return 'This field is required';
+                  }else{
+                    return null;
+                  }
+                },
+                decoration: const InputDecoration(labelText: 'Todo Description'),
+              ),
+            ],
+          ),
+
+          actions: [
+            ElevatedButton(
+              onPressed: Navigator.of(context).pop,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+
+                if (!formKey.currentState!.validate()) return;
+
+                final title = titleController.text.trim();
+                final description = descriptionController.text.trim();
+
+                if (todo == null) {
+                  Todo? results = await TodoService.createTodo(
+                    Todo(title: title, description: description, completed: false, userId: userId),
+                  );
+
+                  setState(() => _isFormLoading = false);
+
+                  if (results != null) {
+                    Get.snackbar(
+                      "Create Todo",
+                      "You have successfully created new todo!",
+                      backgroundColor: Colors.green,
+                      colorText: Colors.white,
+                      margin: EdgeInsets.all(15),
+                      icon: Icon(Icons.message, color: Colors.white,),
+                    );
+                  } else {
+                    Get.snackbar(
+                      "Create Todo",
+                      "An error occurred while creating todo!!",
+                      backgroundColor: Colors.red,
+                      colorText: Colors.white,
+                      snackPosition: SnackPosition.BOTTOM,
+                      margin: EdgeInsets.all(15),
+                      icon: Icon(Icons.message, color: Colors.white,),
+                    );
+                  }
+                } else {
+
+                  if (!formKey.currentState!.validate()) return;
+
+                  final title = titleController.text.trim();
+                  final description = descriptionController.text.trim();
+
+                  if (todo.id != null) {
+                    Todo? results = await TodoService.updateTodo(
+                      todo.id!,
+                      Todo(title: title, description: description, completed: todo.completed, userId: todo.userId),
+                    );
+
+                    setState(() => _isFormLoading = false);
+
+                    if (results != null) {
+                      Get.snackbar(
+                        "Update Todo",
+                        "You have successfully updated the todo!",
+                        backgroundColor: Colors.green,
+                        colorText: Colors.white,
+                        margin: EdgeInsets.all(15),
+                        icon: Icon(Icons.message, color: Colors.white,),
+                      );
+                    } else {
+                      Get.snackbar(
+                        "Update Todo",
+                        "An error occurred while updating todo!!",
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white,
+                        snackPosition: SnackPosition.BOTTOM,
+                        margin: EdgeInsets.all(15),
+                        icon: Icon(Icons.message, color: Colors.white,),
+                      );
+                    }
+                  }
+                }
+
+                if (context.mounted) {
+
+                  Navigator.of(context).pop();
+
+                  _refreshTodos();
+                }
+              },
+
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                foregroundColor: Colors.white,
+              ),
+
+              child: Text(todo == null ? 'Save Todo' : 'Update Todo'),
+            ),
+          ],
+        ),
+      );
+    },
+    );
   }
 
   @override
@@ -64,7 +250,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               color: Colors.white
           ),
           title: Text(
-            username != null ? "Welcome $role, $username" : "Admin Dashboard",
+            username != null ? "Welcome Admin, $username" : "Admin Dashboard",
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -132,24 +318,28 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                      trailing: Row(
                        mainAxisSize: MainAxisSize.min,
                        children: [
+                         if(todo.userId == userId)
                          IconButton(
                            icon: const Icon(Icons.edit, color: Colors.green),
                            onPressed: () {
-                             
+                             showTodoDialog(todo: todo);
                            },
                          ),
+                         if(todo.userId == userId)
                          IconButton(
                            icon: const Icon(Icons.delete, color: Colors.red),
                            onPressed: () {
 
                            },
                          ),
+                         if(todo.userId == userId)
                          IconButton(
                            icon: const Icon(Icons.check_circle, color: Colors.green),
                            onPressed: () {
 
                            },
                          ),
+                         if(todo.userId == userId)
                          IconButton(
                            icon: const Icon(Icons.cancel, color: Colors.red),
                            onPressed: () {
@@ -167,7 +357,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
        ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-         
+          showTodoDialog();
         },
         backgroundColor: Colors.purpleAccent,
         child: Icon(

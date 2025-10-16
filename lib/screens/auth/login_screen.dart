@@ -5,7 +5,6 @@ import 'package:todo_app/screens/todo_main_screen.dart';
 import 'package:todo_app/services/auth_service.dart';
 
 import '../../models/user.dart';
-import '../home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

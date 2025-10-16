@@ -24,7 +24,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   String? name;
   String? username;
   String? email;
-  
   String? password;
   String? role;
   bool isLoading = true;

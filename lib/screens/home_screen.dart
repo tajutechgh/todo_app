@@ -156,7 +156,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   setState(() => _isLoading = false);
 
                   if (results != null) {
-                    Get.to(HomeScreen());
                     Get.snackbar(
                       "Create Todo",
                       "You have successfully created new todo!",
@@ -192,7 +191,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     setState(() => _isLoading = false);
 
                     if (results != null) {
-                      Get.to(HomeScreen());
                       Get.snackbar(
                         "Update Todo",
                         "You have successfully updated the todo!",
@@ -246,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           color: Colors.white
         ),
          title: Text(
-           username != null ? "Welcome, $username" : "Todo List",
+           username != null ? "Welcome User, $username" : "Todo List",
            style: TextStyle(
              color: Colors.white,
              fontSize: 20,
