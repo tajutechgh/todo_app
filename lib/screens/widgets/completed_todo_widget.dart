@@ -54,7 +54,7 @@ class _CompletedTodoWidgetState extends State<CompletedTodoWidget> {
     );
   }
 
-  // deleting function
+  // check complete todo to pending function
   Future<void> pendingTodo(int? id) async {
 
     if (id == null) return;

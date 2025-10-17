@@ -82,6 +82,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   // creating and editing dialog function
   Future<void> showTodoDialog([Todo? todo]) async {
 
+    setState(() {
+      _isLoading = true;
+    });
+
     titleController.text = todo?.title?? "";
     descriptionController.text = todo?.description?? "";
 

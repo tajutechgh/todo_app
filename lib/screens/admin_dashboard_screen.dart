@@ -88,6 +88,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   // creating and editing dialog function
   void showTodoDialog({Todo? todo}) {
 
+    setState(() {
+      _isFormLoading = true;
+    });
+
     titleController.text = todo?.title?? "";
     descriptionController.text = todo?.description?? "";
 
@@ -241,6 +245,63 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     );
   }
 
+  // deleting function
+  Future<void> deleteTodo(int? id) async {
+
+    if (id == null) return;
+
+    await TodoService.deleteTodo(id);
+
+    _refreshTodos();
+
+    Get.snackbar(
+      "Delete Todo",
+      "You have successfully deleted this todo!",
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+      margin: EdgeInsets.all(15),
+      icon: Icon(Icons.message, color: Colors.white,),
+    );
+  }
+
+  // check pending todo completed function
+  Future<void> completedTodo(int? id) async {
+
+    if (id == null) return;
+
+    await TodoService.completeTodo(id);
+
+    _refreshTodos();
+
+    Get.snackbar(
+      "Complete Todo",
+      "You have successfully completed this todo!",
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+      margin: EdgeInsets.all(15),
+      icon: Icon(Icons.message, color: Colors.white,),
+    );
+  }
+
+  // check complete todo to pending function
+  Future<void> pendingTodo(int? id) async {
+
+    if (id == null) return;
+
+    await TodoService.pendingTodo(id);
+
+    _refreshTodos();
+
+    Get.snackbar(
+      "Pending Todo",
+      "You have successfully pend this todo!",
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+      margin: EdgeInsets.all(15),
+      icon: Icon(Icons.message, color: Colors.white,),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -329,23 +390,25 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                          IconButton(
                            icon: const Icon(Icons.delete, color: Colors.red),
                            onPressed: () {
-
+                              deleteTodo(todo.id);
                            },
                          ),
                          if(todo.userId == userId)
-                         IconButton(
-                           icon: const Icon(Icons.check_circle, color: Colors.green),
-                           onPressed: () {
-
-                           },
-                         ),
+                           if(todo.completed == false)
+                           IconButton(
+                             icon: const Icon(Icons.check_circle, color: Colors.green),
+                             onPressed: () {
+                                completedTodo(todo.id);
+                             },
+                           ),
                          if(todo.userId == userId)
-                         IconButton(
-                           icon: const Icon(Icons.cancel, color: Colors.red),
-                           onPressed: () {
-
-                           },
-                         ),
+                           if(todo.completed == true)
+                           IconButton(
+                             icon: const Icon(Icons.cancel, color: Colors.red),
+                             onPressed: () {
+                                 pendingTodo(todo.id);
+                             },
+                           ),
                        ],
                      ),
                    ),
