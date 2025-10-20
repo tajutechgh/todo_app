@@ -4,20 +4,19 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:todo_app/services/base_url.dart';
 import '../models/user.dart';
 
 class AuthService {
 
   final storage = const FlutterSecureStorage();
 
-  static const String baseUrl = "http://10.0.2.2:8080/api/v1/auth";
-
   // register user
   static Future<bool> register(User user) async {
 
     final response = await http.post(
 
-      Uri.parse('$baseUrl/register'),
+      Uri.parse(BaseUrl.register),
 
       headers: {'Content-Type': 'application/json'},
 
@@ -32,7 +31,7 @@ class AuthService {
 
     final response = await http.post(
 
-      Uri.parse('$baseUrl/login'),
+      Uri.parse(BaseUrl.login),
 
       headers: {'Content-Type': 'application/json'},
 

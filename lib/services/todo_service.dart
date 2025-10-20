@@ -4,9 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/models/todo.dart';
 
-class TodoService {
+import 'base_url.dart';
 
-  static const String baseUrl = "http://10.0.2.2:8080/api/v1/todos";
+class TodoService {
 
   // GET all todos
   static Future<List<Todo>> fetchAllTodos() async {
@@ -18,7 +18,7 @@ class TodoService {
 
     final response = await http.get(
 
-      Uri.parse('$baseUrl/all'),
+      Uri.parse(BaseUrl.getAllTodos),
 
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ class TodoService {
 
     final response = await http.get(
 
-      Uri.parse('$baseUrl/completed'),
+      Uri.parse(BaseUrl.getAllCompletedTodos),
 
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ class TodoService {
 
     final response = await http.get(
 
-      Uri.parse('$baseUrl/pending'),
+      Uri.parse(BaseUrl.getAllPendingTodos),
 
       headers: {
         'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ class TodoService {
 
     final response = await http.post(
 
-      Uri.parse('$baseUrl/create'),
+      Uri.parse(BaseUrl.createTodos),
 
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -155,7 +155,7 @@ class TodoService {
 
     final response = await http.put(
 
-      Uri.parse('$baseUrl/update/$id'),
+      Uri.parse(BaseUrl.updateTodo(id)),
 
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -190,7 +190,7 @@ class TodoService {
 
     final response = await http.delete(
 
-        Uri.parse('$baseUrl/delete/$id'),
+        Uri.parse(BaseUrl.deleteTodo(id)),
 
         headers: {
           'Authorization': token,
@@ -217,7 +217,7 @@ class TodoService {
 
     final response = await http.patch(
 
-      Uri.parse('$baseUrl/complete/$id'),
+      Uri.parse(BaseUrl.updateTodosCompleteStatus(id)),
 
       headers: {
         'Content-Type': 'application/json',
@@ -249,7 +249,7 @@ class TodoService {
 
     final response = await http.patch(
 
-      Uri.parse('$baseUrl/incomplete/$id'),
+      Uri.parse(BaseUrl.updateTodosPendingStatus(id)),
 
       headers: {
         'Content-Type': 'application/json',

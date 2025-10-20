@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user.dart';
+import 'base_url.dart';
 
 class UserService{
-  static const String baseUrl = "http://10.0.2.2:8080/api/v1/users";
 
   // get current user profile details
   static Future<Map<String, dynamic>?> fetchUserProfile() async {
@@ -19,7 +19,7 @@ class UserService{
 
     final response = await http.get(
 
-      Uri.parse('$baseUrl/profile'),
+      Uri.parse(BaseUrl.getUserProfile),
 
       headers: {
         'Authorization': token,
@@ -42,10 +42,10 @@ class UserService{
       return null;
     }
   }
-  
+
   // get current user data
   static Future<User> getCurrentUserData() async {
-    
+
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('jwt_token');
 
@@ -55,7 +55,7 @@ class UserService{
 
     final response = await http.get(
 
-      Uri.parse('$baseUrl/profile'),
+      Uri.parse(BaseUrl.getCurrentUserData),
 
       headers: {
         'Authorization': token,
@@ -74,35 +74,35 @@ class UserService{
       throw Exception('Failed to load user data: ${response.statusCode}');
     }
   }
-  
+
   // update current user profile
   static Future<User?> updateCurrentUserProfile(int id, User user) async {
-    
+
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('jwt_token');
 
     if (token == null) return null;
 
     final response = await http.put(
-      
-      Uri.parse('$baseUrl/profile/update/$id'),
+
+      Uri.parse(BaseUrl.updateUserProfile(id)),
 
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': token,
       },
-      
+
       body: jsonEncode(user.toUserJson()),
     );
 
     if (response.statusCode == 200) {
-      
+
       final data = jsonDecode(response.body);
-      
-      return User.fromJson(data); 
-      
+
+      return User.fromJson(data);
+
     } else {
-      
+
       if (kDebugMode) {
         print('Failed to update user, code: ${response.statusCode}');
       }
@@ -121,7 +121,7 @@ class UserService{
 
     final response = await http.get(
 
-      Uri.parse('$baseUrl/all'),
+      Uri.parse(BaseUrl.getAllUsers),
 
       headers: {
         'Content-Type': 'application/json',
@@ -155,7 +155,7 @@ class UserService{
 
     final response = await http.post(
 
-      Uri.parse('$baseUrl/create'),
+      Uri.parse(BaseUrl.createUser),
 
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -190,7 +190,7 @@ class UserService{
 
     final response = await http.put(
 
-      Uri.parse('$baseUrl/update/$id'),
+      Uri.parse(BaseUrl.updateUser(id)),
 
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -225,7 +225,7 @@ class UserService{
 
     final response = await http.delete(
 
-      Uri.parse('$baseUrl/delete/$id'),
+      Uri.parse(BaseUrl.deleteUser(id)),
 
       headers: {
         'Authorization': token,
