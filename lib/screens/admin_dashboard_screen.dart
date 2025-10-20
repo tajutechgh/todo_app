@@ -20,15 +20,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   final TextEditingController descriptionController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool _isFormLoading = false;
-
   late Future<List<Todo>>  futureTodos;
-  
   bool _loading = true;
-
   String? username;
-
   String? role;
-
   int? userId;
   String? name;
   String? email;
@@ -45,27 +40,21 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   }
 
   Future<void> _loadCurrentUserName() async {
-    
     final name = await AuthService.getCurrentUsername();
-
     setState(() {
       username = name;
     });
   }
 
   Future<void> _loadRole() async {
-
     final currentUserRole = await AuthService.getUserRole();
-
     setState(() {
       role = currentUserRole;
     });
   }
 
   Future<void> _loadProfile() async {
-
     final profile = await UserService.fetchUserProfile();
-
     if (mounted) {
       setState(() {
         userId = profile?['id'];
@@ -78,7 +67,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
   }
 
   void _refreshTodos() {
-    
     setState(() {
       futureTodos = TodoService.fetchAllTodos();
       _loading = false;
@@ -87,14 +75,11 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   // creating and editing dialog function
   void showTodoDialog({Todo? todo}) {
-
     setState(() {
       _isFormLoading = true;
     });
-
     titleController.text = todo?.title?? "";
     descriptionController.text = todo?.description?? "";
-
     showDialog(context: context, builder: (context) {
       return Form(
         key: formKey,
@@ -111,7 +96,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               ),
             ],
           ),
-
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -140,7 +124,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               ),
             ],
           ),
-
           actions: [
             ElevatedButton(
               onPressed: Navigator.of(context).pop,
@@ -152,19 +135,14 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-
                 if (!formKey.currentState!.validate()) return;
-
                 final title = titleController.text.trim();
                 final description = descriptionController.text.trim();
-
                 if (todo == null) {
                   Todo? results = await TodoService.createTodo(
                     Todo(title: title, description: description, completed: false, userId: userId),
                   );
-
                   setState(() => _isFormLoading = false);
-
                   if (results != null) {
                     Get.snackbar(
                       "Create Todo",
@@ -186,20 +164,15 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     );
                   }
                 } else {
-
                   if (!formKey.currentState!.validate()) return;
-
                   final title = titleController.text.trim();
                   final description = descriptionController.text.trim();
-
                   if (todo.id != null) {
                     Todo? results = await TodoService.updateTodo(
                       todo.id!,
                       Todo(title: title, description: description, completed: todo.completed, userId: todo.userId),
                     );
-
                     setState(() => _isFormLoading = false);
-
                     if (results != null) {
                       Get.snackbar(
                         "Update Todo",
@@ -222,20 +195,15 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     }
                   }
                 }
-
                 if (context.mounted) {
-
                   Navigator.of(context).pop();
-
                   _refreshTodos();
                 }
               },
-
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
                 foregroundColor: Colors.white,
               ),
-
               child: Text(todo == null ? 'Save Todo' : 'Update Todo'),
             ),
           ],
@@ -247,13 +215,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   // deleting function
   Future<void> deleteTodo(int? id) async {
-
     if (id == null) return;
-
     await TodoService.deleteTodo(id);
-
     _refreshTodos();
-
     Get.snackbar(
       "Delete Todo",
       "You have successfully deleted this todo!",
@@ -266,13 +230,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   // check pending todo completed function
   Future<void> completedTodo(int? id) async {
-
     if (id == null) return;
-
     await TodoService.completeTodo(id);
-
     _refreshTodos();
-
     Get.snackbar(
       "Complete Todo",
       "You have successfully completed this todo!",
@@ -285,13 +245,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   // check complete todo to pending function
   Future<void> pendingTodo(int? id) async {
-
     if (id == null) return;
-
     await TodoService.pendingTodo(id);
-
     _refreshTodos();
-
     Get.snackbar(
       "Pending Todo",
       "You have successfully pend this todo!",
@@ -304,7 +260,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
@@ -326,39 +281,23 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
         ),
        body: _loading ? const Center(child: CircularProgressIndicator()) : FutureBuilder<List<Todo>>(
          future: futureTodos,
-         
          builder: (context, snapshot) {
-
            if (snapshot.connectionState == ConnectionState.waiting) {
-
              return const Center(child: CircularProgressIndicator());
-
            } else if (snapshot.hasError) {
-
              return Center(child: Text('Error: ${snapshot.error}'));
-
            } else if (snapshot.data == null || snapshot.data!.isEmpty) {
-
              return const Center(child: Text('No todos found'));
-
            } else {
-
              final todos = snapshot.data!;
-
              return ListView.builder(
-               
                itemCount: todos.length,
-
                itemBuilder: (context, index) {
-
                  final todo = todos[index];
-
                  return Card(
                    color:   todo.completed == true? Colors.orange : Colors.greenAccent,
                    margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-
                    child: ListTile(
-
                      title: Text(
                          todo.title,
                        style: TextStyle(

@@ -200,7 +200,7 @@ class TodoService {
     if (response.statusCode != 200) {
 
       if (kDebugMode) {
-        print('Failed to create todo, code: ${response.statusCode}');
+        print('Failed to delete todo, code: ${response.statusCode}');
       }
 
       throw Exception('Failed to delete todo');

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/screens/admin_dashboard_screen.dart';
+import 'package:todo_app/screens/admin_navigation_screen.dart';
 import 'package:todo_app/screens/home_screen.dart';
 import 'package:todo_app/services/auth_service.dart';
 
@@ -43,7 +43,7 @@ class _TodoMainScreenState extends State<TodoMainScreen> {
     // Role-based routing
     if (_role == "ADMIN") {
       
-      return const AdminDashboardScreen();
+      return const AdminNavigationScreen();
       
     } else if (_role == "USER") {
       

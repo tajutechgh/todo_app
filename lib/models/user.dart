@@ -27,13 +27,22 @@ class User{
     this.role
   });
 
+  User.newUser({
+    this.name,
+    this.username,
+    this.email,
+    this.password,
+    this.role
+});
+
   factory User.fromJson(Map<String, dynamic> json){
 
     return User.currentUserProfile(
         id: json["id"],
         name: json["name"],
         username: json["username"],
-        email: json["email"]
+        email: json["email"],
+        role: json["role"]
     );
 
   }
@@ -59,7 +68,9 @@ class User{
       "id": id,
       "name": name,
       "username": username,
-      "email": email
+      "email": email,
+      "password": password,
+      "role": role
     };
   }
 }
