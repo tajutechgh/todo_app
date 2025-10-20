@@ -38,6 +38,7 @@ dependencies:
   shared_preferences: ^2.5.3
   jwt_decoder: ^2.0.1
   flutter_secure_storage: ^9.2.4
+  flutter_launcher_icons: ^0.14.2
 
 dev_dependencies:
   flutter_test:
@@ -91,3 +92,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/app_icon.png"
+  adaptive_icon_background: "#ffffff"  # or use an image: "assets/icon/background.png"
+  adaptive_icon_foreground: "assets/icon/app_icon.png"
