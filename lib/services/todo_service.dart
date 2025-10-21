@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/models/todo.dart';
 
-import 'base_url.dart';
+import '../endpoints/base_url.dart';
 
 class TodoService {
 
